@@ -37,64 +37,149 @@
 const camera = new BABYLON.ArcRotateCamera("camera", -Math.PI / 2, Math.PI / 2.5, 3, new BABYLON.Vector3(0, 0, 0), scene);
 camera.attachControl(canvas, true);
 const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+
 scene.clearColor = new BABYLON.Color3(0.0, 0.0, 0.0);
 
-capacity = 20000
+
+
+capacity = 200000	
 const myParticleSystem = new BABYLON.ParticleSystem("particles", capacity, scene);
-var box = BABYLON.Mesh.CreateBox("box", .005, scene);
-        
-myParticleSystem.particleTexture = new BABYLON.Texture("flare.jpg");
-//myParticleSystem.textureMask = new BABYLON.Color4(0.1, 0.8, 0.8, 0.0);
-myParticleSystem.emitter = box;
-//myParticleSystem.emitter = point; //a Vector3
+//var box = BABYLON.Mesh.CreateBox("box", .005, scene);
 
-//sphere emitter
-//var emitterType = new BABYLON.SphereParticleEmitter();
-//    emitterType.radius = .5;
-//    emitterType.radiusRange = 0;
-//    myParticleSystem.particleEmitterType = emitterType;
+var coreSphere = BABYLON.MeshBuilder.CreateSphere("coreSphere", {diameter: 0.4, segments: 64}, scene);
+const cometMat = new BABYLON.StandardMaterial("cometMat");
+cometMat.diffuseTexture = new BABYLON.Texture("./textures/bluSur.jpg");
+coreSphere.material = cometMat;
+var hl = new BABYLON.HighlightLayer("hl1", scene);
+coreSphere.visibility = 2;
+hl.addMesh(coreSphere, BABYLON.Color3.Yellow());
 
-
+coreSphere.position.y = 0;
+coreSphere.position.x = 0;
 
 
-//var noiseTexture = new BABYLON.NoiseProceduralTexture("perlin", 256, scene);
-//noiseTexture.animationSpeedFactor = 5;
-//noiseTexture.persistence = 2;
-//noiseTexture.brightness = 0.5;
-//noiseTexture.octaves = 2;
-//myParticleSystem.noiseTexture = noiseTexture;
-//myParticleSystem.noiseStrength = new BABYLON.Vector3(100, 100, 100);
-myParticleSystem.minSize = 0.1;
-myParticleSystem.maxSize = 0.5;
+const torus = BABYLON.MeshBuilder.CreateTorus("torus", {thickness: 0.01, diameter: 1.3, segments: 256});
+torus.rotation.x  =  90;
+torus.visibility= false;
 
-particleSystem = myParticleSystem
-//particleSystem.minScaleX = 0.1;
-//particleSystem.maxScaleX = 0.5;
-//particleSystem.minScaleY = 0.2;
-//particleSystem.maxScaleY = 0.4;
+const torus2 = BABYLON.MeshBuilder.CreateTorus("torus", {thickness: 0.01, diameter: 0.7, segments: 256});
+torus2.rotation.x  =  90;
+torus2.visibility= false;
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//particleSystem.color1 = new BABYLON.Color4(0.7, 0.8, 1.0, 1.0);
-//particleSystem.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 1.0);
-//particleSystem.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
-
-particleSystem.minEmitPower = 1;
-particleSystem.maxEmitPower = 3;
-
-particleSystem.minAngularSpeed = 0;
-particleSystem.maxAngularSpeed = Math.PI;
-
-//particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
-//particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
-
-//particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
-particleSystem.emitRate = 500;
-
-particleSystem.minLifeTime = 0.3;
-particleSystem.maxLifeTime = 1.5;
-
-myParticleSystem.start();
+//particle system
+capacity = 200000	
+const myParticleSystem2 = new BABYLON.ParticleSystem("particles", capacity, scene);
+myParticleSystem2.particleTexture = new BABYLON.Texture("textures/green.jpg");
+//myParticleSystem2.emitter = new BABYLON.Vector3(0, 0, 0);
+myParticleSystem2.emitter = torus;
+var noiseTexture = new BABYLON.NoiseProceduralTexture("perlin", 256, scene);
+noiseTexture.animationSpeedFactor = 3;
+noiseTexture.persistence = 1;
+noiseTexture.brightness = 0.1;
+noiseTexture.octaves = 2;
+myParticleSystem.noiseTexture = noiseTexture;
+myParticleSystem.noiseStrength = new BABYLON.Vector3(10, 10, 10);
 
 
+myParticleSystem2.minSize = 0.1;
+myParticleSystem2.maxSize = 0.5;
+
+myParticleSystem2.minEmitPower = 0;
+myParticleSystem2.maxEmitPower = 1;
+
+myParticleSystem2.minAngularSpeed = 0;
+myParticleSystem2.maxAngularSpeed = Math.PI/4;
+
+//myParticleSystem2.gravity = new BABYLON.Vector3(-3, -3, 0);
+myParticleSystem2.emitRate = 1500;
+
+myParticleSystem2.minLifeTime = 0.3;
+myParticleSystem2.maxLifeTime = .6;
+
+myParticleSystem2.createCylinderEmitter(.8,1,0,0);
+myParticleSystem2.start();
+
+
+////////////////////////////////////////////
+capacity = 200000	
+const myParticleSystem4 = new BABYLON.ParticleSystem("particles", capacity, scene);
+myParticleSystem4.particleTexture = new BABYLON.Texture("textures/bl1.jpg");
+//myParticleSystem2.emitter = new BABYLON.Vector3(0, 0, 0);
+myParticleSystem4.emitter = torus;
+var noiseTexture = new BABYLON.NoiseProceduralTexture("perlin", 256, scene);
+noiseTexture.animationSpeedFactor = 3;
+noiseTexture.persistence = 1;
+noiseTexture.brightness = 0.1;
+noiseTexture.octaves = 2;
+myParticleSystem.noiseTexture = noiseTexture;
+myParticleSystem.noiseStrength = new BABYLON.Vector3(10, 10, 10);
+
+
+myParticleSystem4.minSize = 0.1;
+myParticleSystem4.maxSize = 0.3;
+
+myParticleSystem4.minEmitPower = 0;
+myParticleSystem4.maxEmitPower = .0;
+
+myParticleSystem4.minAngularSpeed = 0;
+myParticleSystem4.maxAngularSpeed = Math.PI/4;
+
+//myParticleSystem2.gravity = new BABYLON.Vector3(-3, -3, 0);
+myParticleSystem4.emitRate = 1500;
+
+myParticleSystem4.minLifeTime = 0.3;
+myParticleSystem4.maxLifeTime = .6;
+
+myParticleSystem4.createCylinderEmitter(.6,1,0,0);
+myParticleSystem4.start();
+
+
+////////////////////////////////////////////
+
+//particle system
+capacity = 200000	
+const myParticleSystem3 = new BABYLON.ParticleSystem("particles", capacity, scene);
+myParticleSystem3.particleTexture = new BABYLON.Texture("textures/yellow.jpg");
+//myParticleSystem2.emitter = new BABYLON.Vector3(0, 0, 0);
+myParticleSystem3.emitter = torus;
+var noiseTexture = new BABYLON.NoiseProceduralTexture("perlin", 256, scene);
+noiseTexture.animationSpeedFactor = 3;
+noiseTexture.persistence = 1;
+noiseTexture.brightness = 0.1;
+noiseTexture.octaves = 2;
+myParticleSystem.noiseTexture = noiseTexture;
+myParticleSystem.noiseStrength = new BABYLON.Vector3(10, 10, 10);
+
+
+myParticleSystem3.minSize = 0.1;
+myParticleSystem3.maxSize = 0.5;
+
+myParticleSystem3.minEmitPower = 0;
+myParticleSystem3.maxEmitPower = .3;
+
+myParticleSystem3.minAngularSpeed = 0;
+myParticleSystem3.maxAngularSpeed = Math.PI/4;
+
+//myParticleSystem2.gravity = new BABYLON.Vector3(-3, -3, 0);
+myParticleSystem3.emitRate = 1500;
+
+myParticleSystem3.minLifeTime = 0.3;
+myParticleSystem3.maxLifeTime = .6;
+
+myParticleSystem3.createCylinderEmitter(.41,1,0,0);
+myParticleSystem3.start();
+
+
+//rotate
+// scene.registerBeforeRender(function(){
+//        torus.rotation.y += 0.01;
+//    });
+
+
+
+
+///////////////////////////////////////////
 	var renderLoop = function () {
     scene.render();
 	 
